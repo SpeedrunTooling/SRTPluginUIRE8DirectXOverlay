@@ -6,24 +6,20 @@
     <LangVersion>latest</LangVersion>
     <Platforms>x64</Platforms>
     <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
-    <Authors>VideoGameRoulette</Authors>
-    <Company>VideoGameRoulette</Company>
-    <Copyright>Copyright © 2021 VideoGameRoulette</Copyright>
+	<Company>VideoGameRoulette</Company>
+	<Authors>$(Company)</Authors>
+	<Copyright>Copyright © 2023 $(Company)</Copyright>
     <Product>Resident Evil Village (2021) DirectX Overlay User Interface Plugin</Product>
     <Description>A user-interface plugin to display the values provided by the RE8 Provider Plugin in a DirectX overlay.</Description>
-    <Version>1.0.1.6</Version>
-    <FileVersion>1.0.1.6</FileVersion>
+    <Version>1.0.2.0</Version>
+    <FileVersion>1.0.2.0</FileVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <!-- netcoreapp3.1 had to be hardcoded here because this project reports $(TargetFramework) as netstandard2.0 (rightfully so) and I am not sure how this project's csproj can auto-detect another project's framework version to copy it to the appropriate folder so we're just... hardcoding this. -->
-    <CopyDestionationPath>$(SolutionDir)..\..\Squirrelies\SRTHost\SRTHost\bin\$(Configuration)\net5.0-windows\plugins</CopyDestionationPath>
+    <CopyDestionationPath>$(SolutionDir)..\..\SpeedRunTool\SRTHost\SRTHost\bin\$(Configuration)\net5.0-windows\plugins</CopyDestionationPath>
     <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <PropertyGroup>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
@@ -34,7 +30,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="GameOverlay.Net" Version="4.3.0" />
+    <PackageReference Include="GameOverlay.Net" Version="4.3.1" />
     <PackageReference Include="Microsoft.Win32.Registry" Version="5.0.0" />
   </ItemGroup>
 
@@ -71,10 +67,6 @@
     </ItemGroup>
     <Message Text="Copying files: @(OutputFiles)" Importance="high" />
     <Copy SourceFiles="@(OutputFiles)" DestinationFolder="$(CopyDestionationPath)\$(ProjectName)\%(RecursiveDir)" OverwriteReadOnlyFiles="true"></Copy>
-  </Target>
-
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(BuildingInsideVisualStudio)' == 'true' And '$(TJGutjahr)' == 'true'">
-    <Exec Command="&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe&quot; sign /tr &quot;http://timestamp.digicert.com&quot; /td SHA1 /sha1 &quot;027e4c2a016f695ab4adefda2d326199b571bf0a&quot; /fd SHA1 &quot;$(TargetDir)\$(ProjectName).dll&quot;&#xD;&#xA;&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe&quot; sign /tr &quot;http://timestamp.digicert.com&quot; /td SHA256 /sha1 &quot;027e4c2a016f695ab4adefda2d326199b571bf0a&quot; /fd SHA256 /as &quot;$(TargetDir)\$(ProjectName).dll&quot;&#xD;&#xA;&quot;C:\Program Files (x86)\Windows Kits\10\bin\10.0.19041.0\x64\signtool.exe&quot; sign /tr &quot;http://timestamp.digicert.com&quot; /td SHA512 /sha1 &quot;027e4c2a016f695ab4adefda2d326199b571bf0a&quot; /fd SHA512 /as &quot;$(TargetDir)\$(ProjectName).dll&quot;&#xD;&#xA;" />
   </Target>
   
 </Project>
